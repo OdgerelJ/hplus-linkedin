@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Footer from "./component/Footer";
+import Guarantee from "./component/Guarantee";
+import Header from "./component/Header";
+import History from "./component/History";
+import People from "./component/People";
+import Products from "./component/Products";
+import { Authenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <Authenticator
+        loginMechanisms={["email"]}
+        socialProviders={["amazon", "apple", "facebook", "google"]}
+      >
+        {({ signOut, user }) => (
+          <div className="App">
+            <Header />
+            <History />
+            <Products />
+            <Guarantee />
+            <People />
+            <Footer />
+            <h1>Hello {user.username}</h1>
+            <button onClick={signOut}>Sign out</button>
+          </div>
+        )}
+      </Authenticator>
+    );
+  }
 }
 
 export default App;
